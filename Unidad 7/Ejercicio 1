@@ -1,0 +1,59 @@
+create table Pers1 (
+    id integer not null constraint pers1_pk primary key,
+    nom varchar(30) not null,
+	idC integer not null,
+    edad integer,
+    foreign key (idC) references Ciu (ciudadId) on update cascade --probar on delete restrict
+);
+
+drop table Pers1
+
+create table Pers2 (
+    id integer not null constraint pers2_pk primary key,
+    nom varchar(30) not null,
+	idC integer not null,
+    edad integer,
+    foreign key (idC) references Ciu (ciudadId) on delete set null --probar on update restrict
+);
+
+
+create table Ciu (
+	ciudadId integer not null constraint ciudad_pk primary key,
+	ciudadNom varchar (30) not null
+);
+
+Insert into Ciu values
+(1, 'Estambul'),
+(2, 'Roma'),
+(3, 'Barcelona'),
+(4, 'Praga');
+
+Insert Into Pers1 values
+(1, 'Juan Manuel Ariza', 1, 16),
+(2, 'Santiago Manrique', 2, 25),
+--(3, 'Luciano Perez', 5, 50), No se puede agregar porque no existe una ciudad con ID=5--
+--(4, 'Andrea Hernández', 1), No se puede agregar porque le falta un valor --
+(5, 'Ana Perez', 1, 30);
+
+Insert Into Pers2 values
+(1, 'Juan Manuel Ariza', 1, 16),
+(2, 'Santiago Manrique', 2, 25),
+--(3, 'Luciano Perez', 5, 50), No se puede agregar porque no existe una ciudad con ID=5--
+--(4, 'Andrea Hernández', 1), No se puede agregar porque le falta un valor --
+(5, 'Ana Perez', 1, 30);
+
+SELECT ciudadNom FROM Ciu	-- Ejercicio 4. a)
+ORDER BY ciudadNom Asc		-- mostrar nombres de ciudad ordenados alfabeticamente
+
+SELECT * FROM PERS1 -- Ejercicio 4.b)
+WHERE edad >= 18	-- mostrar personas mayores de edad
+
+SELECT COUNT(*) FROM PERS1	-- Ejercicio 4.c) contar personas
+
+SELECT COUNT(*) FROM CIU	-- Ejercicio 4.d) contar ciudades
+
+DELETE FROM CIU				-- Ejercicio 4.e)
+WHERE ciudadId = 1			-- borrar ciudad con id=1 (no se puede realizar por las restricciones de las tablas PERS)
+
+SELECT COUNT(*) FROM PERS1 JOIN CIU -- Ejercicio 4.f)
+ON idC=ciudadID						-- contar ciudades donde viven personas
