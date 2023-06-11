@@ -3,17 +3,15 @@ create table Pers1 (
     nom varchar(30) not null,
 	idC integer not null,
     edad integer,
-    foreign key (idC) references Ciu (ciudadId) on update cascade --probar on delete restrict
+    foreign key (idC) references Ciu (ciudadId) on update cascade on delete restrict --probar on delete restrict
 );
-
-drop table Pers1
 
 create table Pers2 (
     id integer not null constraint pers2_pk primary key,
     nom varchar(30) not null,
 	idC integer not null,
     edad integer,
-    foreign key (idC) references Ciu (ciudadId) on delete set null --probar on update restrict
+    foreign key (idC) references Ciu (ciudadId) on update restrict on delete set null --probar on update restrict
 );
 
 
@@ -22,12 +20,14 @@ create table Ciu (
 	ciudadNom varchar (30) not null
 );
 
+-- Inserción de ciudades EJERCICIO 2
 Insert into Ciu values
 (1, 'Estambul'),
 (2, 'Roma'),
 (3, 'Barcelona'),
 (4, 'Praga');
 
+-- Inserción de personas EJERCICIO 3
 Insert Into Pers1 values
 (1, 'Juan Manuel Ariza', 1, 16),
 (2, 'Santiago Manrique', 2, 25),
@@ -55,5 +55,6 @@ SELECT COUNT(*) FROM CIU	-- Ejercicio 4.d) contar ciudades
 DELETE FROM CIU				-- Ejercicio 4.e)
 WHERE ciudadId = 1			-- borrar ciudad con id=1 (no se puede realizar por las restricciones de las tablas PERS)
 
-SELECT COUNT(*) FROM PERS1 JOIN CIU -- Ejercicio 4.f)
-ON idC=ciudadID						-- contar ciudades donde viven personas
+SELECT COUNT (DISTINCT ciudadID)	-- Ejercicio 4.f)
+FROM PERS1 JOIN CIU					-- contar ciudades donde viven personas	
+ON idC = ciudadID
